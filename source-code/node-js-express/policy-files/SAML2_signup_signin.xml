@@ -1,0 +1,52 @@
+<TrustFrameworkPolicy 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
+  PolicySchemaVersion="0.3.0.0" 
+  TenantId="tenant-name.onmicrosoft.com" 
+  PolicyId="B2C_1A_SAML2_signup_signin" 
+  PublicPolicyUri="http://tenant-name.onmicrosoft.com/B2C_1A_SAML2_signup_signin">
+  <BasePolicy>
+    <TenantId>tenant-name.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
+  </BasePolicy>
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="SignUpOrSigninSAML" />
+
+    <TechnicalProfile Id="PolicyProfile">
+      <DisplayName>PolicyProfile</DisplayName>
+      <Protocol Name="SAML2" />
+      <Metadata>
+        <Item Key="PartnerEntity"><![CDATA[
+          <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="http://localhost:3000/saml/metadata" validUntil="2018-12-13T16:33:44.410Z">
+            <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:2.0:protocol">
+              <md:KeyDescriptor use="signing">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                  <ds:X509Data>
+                    <ds:X509Certificate>MIIE/zCCA+egAwIBAgIQCaAiNZxuyN1On3LQTO6hizANBgkqhkiG9w0BAQsFADBNMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMScwJQYDVQQDEx5EaWdpQ2VydCBTSEEyIFNlY3VyZSBTZXJ2ZXIgQ0EwHhcNMTgwMTEwMDAwMDAwWhcNMTkwMTE1MTIwMDAwWjBPMQswCQYDVQQGEwJJTDEOMAwGA1UEBxMFRWwnYWQxFTATBgNVBAoTDFlvZWwgSG9ydml0ejEZMBcGA1UEAxMQYjJjLnlvZWwud2Vic2l0ZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANTIgB0v3qYZ+Qsfbh7+vy20lS43ljzUDq9zzzKkRIgtUB6cPnByp6kE2lQokFPsjmWuiAF70JgXO8QICkkSHn4oEEi5H41vnNSWZleh8F3LwTTWrJfJR9oE7YXOgnd4di/4RC8A+goRd0iBPZ/2kDUBscnDtt/c7x3lphKemCZhvTutkrju63l6mvKYAbzNuzcVqIyLflzQf+fZzpzqpBCyfG97Zjrt0iwXP4TTcAa0fCY7VNJS/Y62L+tMfnNBu+JcfOqdKXWIlNCw02/Da3lQpUY7aIyz7yg7hUXuKrsyWhTrug69JHQFwadIc5dw9tMu395QOtALLW5zNYJRiqECAwEAAaOCAdcwggHTMB8GA1UdIwQYMBaAFA+AYRyCMWHVLyjnjUY4tCzhxtniMB0GA1UdDgQWBBTIGC6wN7DO4vnrqHc8tGfEPSuuXTAbBgNVHREEFDASghBiMmMueW9lbC53ZWJzaXRlMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwawYDVR0fBGQwYjAvoC2gK4YpaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL3NzY2Etc2hhMi1nNi5jcmwwL6AtoCuGKWh0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9zc2NhLXNoYTItZzYuY3JsMEwGA1UdIARFMEMwNwYJYIZIAYb9bAEBMCowKAYIKwYBBQUHAgEWHGh0dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwCAYGZ4EMAQIDMHwGCCsGAQUFBwEBBHAwbjAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEYGCCsGAQUFBzAChjpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRTSEEyU2VjdXJlU2VydmVyQ0EuY3J0MAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQELBQADggEBAMqajCgHtBEnxMYTFTidYwP6n4S1GPL2NFpB3AOyHQuHAlrEpVC7vWwAmYaVPZUDoJGHwH+p9Syf0lazMmYHX8ea+j1QUzv2XKmADUPs1IZFKGWlueRSjlv4ayem0IZ298N+jYSg3nBlW/txQJDq4wJ2mQQNQLjikBt7HZ8uBSJR6Gu2Ko1N1L8hin0wA7FRBeTq9EhYU4CufRFjcpBihzoOcNU3DxxClgdLdX6kJYcB0Amia00lI93seYSkOB2vyf44lMd/d+O10tEThtpAZh6q0I2flnJbFe8G+DgihiI/aVMIMg2mMrxhVbqK4seTJ4SAyb/QY5r0jE2u8Eekc2U=</ds:X509Certificate>
+                  </ds:X509Data>
+                </ds:KeyInfo>
+              </md:KeyDescriptor>
+              <md:KeyDescriptor use="encryption">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                  <ds:X509Data>
+                    <ds:X509Certificate>MIIE/zCCA+egAwIBAgIQCaAiNZxuyN1On3LQTO6hizANBgkqhkiG9w0BAQsFADBNMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMScwJQYDVQQDEx5EaWdpQ2VydCBTSEEyIFNlY3VyZSBTZXJ2ZXIgQ0EwHhcNMTgwMTEwMDAwMDAwWhcNMTkwMTE1MTIwMDAwWjBPMQswCQYDVQQGEwJJTDEOMAwGA1UEBxMFRWwnYWQxFTATBgNVBAoTDFlvZWwgSG9ydml0ejEZMBcGA1UEAxMQYjJjLnlvZWwud2Vic2l0ZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANTIgB0v3qYZ+Qsfbh7+vy20lS43ljzUDq9zzzKkRIgtUB6cPnByp6kE2lQokFPsjmWuiAF70JgXO8QICkkSHn4oEEi5H41vnNSWZleh8F3LwTTWrJfJR9oE7YXOgnd4di/4RC8A+goRd0iBPZ/2kDUBscnDtt/c7x3lphKemCZhvTutkrju63l6mvKYAbzNuzcVqIyLflzQf+fZzpzqpBCyfG97Zjrt0iwXP4TTcAa0fCY7VNJS/Y62L+tMfnNBu+JcfOqdKXWIlNCw02/Da3lQpUY7aIyz7yg7hUXuKrsyWhTrug69JHQFwadIc5dw9tMu395QOtALLW5zNYJRiqECAwEAAaOCAdcwggHTMB8GA1UdIwQYMBaAFA+AYRyCMWHVLyjnjUY4tCzhxtniMB0GA1UdDgQWBBTIGC6wN7DO4vnrqHc8tGfEPSuuXTAbBgNVHREEFDASghBiMmMueW9lbC53ZWJzaXRlMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwawYDVR0fBGQwYjAvoC2gK4YpaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL3NzY2Etc2hhMi1nNi5jcmwwL6AtoCuGKWh0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9zc2NhLXNoYTItZzYuY3JsMEwGA1UdIARFMEMwNwYJYIZIAYb9bAEBMCowKAYIKwYBBQUHAgEWHGh0dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwCAYGZ4EMAQIDMHwGCCsGAQUFBwEBBHAwbjAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEYGCCsGAQUFBzAChjpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRTSEEyU2VjdXJlU2VydmVyQ0EuY3J0MAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQELBQADggEBAMqajCgHtBEnxMYTFTidYwP6n4S1GPL2NFpB3AOyHQuHAlrEpVC7vWwAmYaVPZUDoJGHwH+p9Syf0lazMmYHX8ea+j1QUzv2XKmADUPs1IZFKGWlueRSjlv4ayem0IZ298N+jYSg3nBlW/txQJDq4wJ2mQQNQLjikBt7HZ8uBSJR6Gu2Ko1N1L8hin0wA7FRBeTq9EhYU4CufRFjcpBihzoOcNU3DxxClgdLdX6kJYcB0Amia00lI93seYSkOB2vyf44lMd/d+O10tEThtpAZh6q0I2flnJbFe8G+DgihiI/aVMIMg2mMrxhVbqK4seTJ4SAyb/QY5r0jE2u8Eekc2U=</ds:X509Certificate>
+                  </ds:X509Data>
+                </ds:KeyInfo>
+              </md:KeyDescriptor>
+              <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:3000/saml/assert"/>
+              <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:3000/saml/assert" index="0"/>
+            </md:SPSSODescriptor>
+          </md:EntityDescriptor>
+        ]]></Item>
+      </Metadata>
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="displayName" />
+        <OutputClaim ClaimTypeReferenceId="givenName" />
+        <OutputClaim ClaimTypeReferenceId="surname" />
+        <OutputClaim ClaimTypeReferenceId="email" DefaultValue="" />
+        <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="" />
+        <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="objectId" />
+      </OutputClaims>
+      <SubjectNamingInfo ClaimType="objectId" ExcludeAsClaim="true" />
+    </TechnicalProfile>
+  </RelyingParty>
+</TrustFrameworkPolicy>
