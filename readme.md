@@ -23,7 +23,7 @@ Walkthrough
 
 ## Prerequisites
 
-- Complete the steps in the [Get started with custom policies in Active Directory B2C](active-directory-b2c-get-started-custom.md).
+- Complete the steps in the [Get started with custom policies in Active Directory B2C](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started-custom).
 - For this sample policy, you can use any policy of the [starter pack](https://github.com/Azure-Samples/active-directory-b2c-custom-policy-starterpack), such as SocialAndLocalAccounts, or SocialAndLocalAccountsWithMFA 
 
 
