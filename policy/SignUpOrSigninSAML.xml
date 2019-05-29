@@ -1,62 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<TrustFrameworkPolicy 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
-  PolicySchemaVersion="0.3.0.0" 
-  TenantId="tenant-name.onmicrosoft.com" 
-  PolicyId="B2C_1A_TrustFrameworkExtensions" 
-  PublicPolicyUri="http://tenant-name.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions">
-  
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" PolicySchemaVersion="0.3.0.0"
+  TenantId="your-tenant.onmicrosoft.com"
+  PolicyId="B2C_1A_SAML2_signup_signin"
+  PublicPolicyUri="http://your-tenant.onmicrosoft.com/B2C_1A_SAML2_signup_signin">
+
   <BasePolicy>
-    <TenantId>tenant-name.onmicrosoft.com</TenantId>
-    <PolicyId>B2C_1A_TrustFrameworkBase</PolicyId>
+    <TenantId>your-tenant.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
   </BasePolicy>
-  <BuildingBlocks>
 
-  </BuildingBlocks>
-
-  <ClaimsProviders>
-    <!-- Local account Sign-In claims provider -->
-    <ClaimsProvider>
-      <DisplayName>Local Account SignIn</DisplayName>
-		    <TechnicalProfile Id="login-NonInteractive">
-          <InputClaims>
-            <!-- Action required: Change to your ProxyIdentityExperienceFramework App Id-->
-            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="00000000-0000-0000-0000-000000000000" />
-            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="00000000-0000-0000-0000-000000000000" />
-          </InputClaims>
-        </TechnicalProfile>
-      </TechnicalProfiles>
-    </ClaimsProvider>
-
-
-    <!-- Facebook claims provider -->
-	<ClaimsProvider>
-      <DisplayName>Facebook</DisplayName>
-      <TechnicalProfiles>
-        <TechnicalProfile Id="Facebook-OAUTH">
-          <Metadata>
-             <!-- Action required: Change to your Facebook App Id-->
-            <Item Key="client_id">0</Item>
-            <Item Key="scope">email public_profile</Item>
-            <Item Key="ClaimsEndpoint">https://graph.facebook.com/me?fields=id,first_name,last_name,name,email</Item>
-          </Metadata>
-        </TechnicalProfile>
-      </TechnicalProfiles>
-    </ClaimsProvider>
-
+ <ClaimsProviders>
     <ClaimsProvider>
       <DisplayName>Token Issuer</DisplayName>
       <TechnicalProfiles>
-        <!-- SAML Token Issuer technical profile -->
+        <!-- Sample: SAML Token Issuer technical profile -->
         <TechnicalProfile Id="Saml2AssertionIssuer">
           <DisplayName>Token Issuer</DisplayName>
           <Protocol Name="None" />
           <OutputTokenFormat>SAML2</OutputTokenFormat>
           <Metadata>
             <!-- Action required: make sure value is the same one as configured in the relaying party application-->
-            <Item Key="IssuerUri">https://tenant-name.b2clogin.com/tenant-name.onmicrosoft.com/B2C_1A_SAML2_signup_signin</Item>
+            <Item Key="IssuerUri">https://your-tenant.b2clogin.com/your-tenant.onmicrosoft.com/B2C_1A_SAML2_signup_signin</Item>
           </Metadata>
           <CryptographicKeys>
             <!--Action required: Create your own certificate and set the name -->
@@ -165,7 +130,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- Change the issuer technical profile to SMAL -->
+        <!-- Smaple: SAML issuer technical profile -->
         <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="Saml2AssertionIssuer" />
 
       </OrchestrationSteps>
@@ -174,4 +139,29 @@
 
   </UserJourneys>
 
+
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="SignUpOrSigninSAML" />
+ 
+    <TechnicalProfile Id="PolicyProfile">
+      <DisplayName>PolicyProfile</DisplayName>
+      <Protocol Name="SAML2"/>
+      <Metadata>
+        <!--Action required: Set the value PartnerEntity to URL of SP metadata or 
+          embed the metadata directly, using <![CDATA[]]>-->
+        <Item Key="PartnerEntity">https://my-account.blob.core.windows.net/azure-ad-b2c/spring_saml_metadata.xml</Item>
+      </Metadata>
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="displayName" />
+        <OutputClaim ClaimTypeReferenceId="givenName" />
+        <OutputClaim ClaimTypeReferenceId="surname" />
+        <OutputClaim ClaimTypeReferenceId="email" DefaultValue="" />
+        <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="" />
+        <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="objectId"/>
+      </OutputClaims>
+      <SubjectNamingInfo ClaimType="objectId" ExcludeAsClaim="true"/> 
+    </TechnicalProfile>
+  </RelyingParty>
 </TrustFrameworkPolicy>
+
+

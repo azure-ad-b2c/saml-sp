@@ -124,5 +124,6 @@ This solution comes with following certificates under the **certificates** folde
 - **sp-cert-private.pfx** A self-sign certificate with the private key.
 - **sp-cert-public.crt** A self-sign certificate with the public key.
 - **idp-cert-public.crt** Azure AD B2C certificate. As mentioned copy the value of the certificate from Azure AD B2C policy metadata.
+- **idp-cert-public.pfx** Azure AD B2C certificate with the private key. You can use upload this certificate to Azure AD B2C policy key (password: 1). 
 
 

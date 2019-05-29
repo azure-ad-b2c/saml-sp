@@ -156,7 +156,7 @@ Notes:
 |WantsSignedResponses |false |<ul><li>Takes a value of `true` or `false` (default true). </li><li>Setting this to `false` means that the Azure AD B2C shouldn’t sign the SAML response `<samlp:Response>` element. </li><li> If `true`, indicates that SAML response sent by Azure AD B2C to Azure AD B2C is signed, and must be validate by relying party application.</li></ul> | 
 |KeyEncryptionMethod |false |Sets the key encryption method to use for `<EncryptedKey>`. One of the values: `Aes128`, `Aes192`, or `Aes256` |
 |DataEncryptionMethod|false|Sets the key encryption method to use for `<EncryptedData>` and `<CipherData>`. One of the values: `Rsa15` or `RsaOaep` |
-
+|RemoveMillisecondsFromDateTime|false | Setting the value to true, Azure AD B2C removes the milliseconds from date and time elements, such as `IssueInstant`, `NotOnOrAfter`, and `NotBefore` 
 ## SAML Issuer
 To support SAML relying party, your policy needs to issue SAML token, instead of JTW. Following technical profile issues and manage SAML token and SAML SSO session. 
 

@@ -40,7 +40,7 @@ makecert](http://www.virtues.it/2015/08/howto-create-selfsigned-certificates-wit
 
 1. Run this command to generate a self signed certificate:
 
-       makecert -r -pe -n "CN=yourappname.yourtenant.onmicrosoft.com" -a sha256 -sky signature -len 2048 -e 12/21/2018 -sr CurrentUser -ss My YourAppNameSamlCert.cer
+       makecert -r -pe -n "CN=yourappname.yourtenant.onmicrosoft.com" -a sha256 -sky signature -len 2048 -e 12/12/2025 -sr CurrentUser -ss My YourAppNameSamlCert.cer
 
 2. Go to the certificate store > Manage User Certificates &gt; Current
     User &gt; Personal &gt; Certificates &gt;
