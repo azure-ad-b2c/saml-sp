@@ -167,7 +167,7 @@ To support SAML relying party, your policy needs to issue SAML token, instead of
     1. Upload your certificate using the upload file control.
     1. Enter the certificate's password.
     1. Click Create.
-1. Add following technical profiles to the 'Token Issuer' claims provider. Update {tenant-name} to your tenant name, and {polci} to your relying party policy name.
+1. Add following technical profiles to the 'Token Issuer' claims provider. Update {tenant-name} to your tenant name, and {policy-name} to your relying party policy name.
 
 ```xml
 <TechnicalProfile Id="Saml2AssertionIssuer">
@@ -175,7 +175,7 @@ To support SAML relying party, your policy needs to issue SAML token, instead of
   <Protocol Name="None"/>
   <OutputTokenFormat>SAML2</OutputTokenFormat>
   <Metadata>
-    <Item Key="IssuerUri">https://login.microsoftonline.com/te/{tenant-name}/{policy}</Item>
+    <Item Key="IssuerUri">https://login.microsoftonline.com/te/{tenant-name}/{policy-name}</Item>
   </Metadata>
   <CryptographicKeys>
     <Key Id="SamlAssertionSigning" StorageReferenceId="YourAppNameSamlCert" />
@@ -207,7 +207,7 @@ The `Name` attribute of the Protocol XML element has to be set to `None`. The `O
 ### SAML Issuer technical profile's metadata
 |Attribute  |Required| Description  |
 |---------|---------|---------|
-|IssuerUri |true |`https://login.microsoftonline.com/te/{tenant-name}/{policy}`. Replace {**your-tenant**} with your tenant name, and {**policy-name**} with your policy name. |
+|IssuerUri |true |`https://login.microsoftonline.com/te/{tenant-name}/{policy-name}`. Replace {**your-tenant**} with your tenant name, and {**policy-name**} with your policy name. |
 
 ### SAML Issuer technical profile's Cryptographic keys
 The following key may be present in the CryptographicKeys XML element:
