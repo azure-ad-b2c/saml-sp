@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" PolicySchemaVersion="0.3.0.0" TenantId="yourtenant.onmicrosoft.com" PolicyId="B2C_1A_SAML_IdP_Initiated" PublicPolicyUri="http://yourtenant.onmicrosoft.com/B2C_1A_SAML_IdP_Initiated">
+
+  <BasePolicy>
+    <TenantId>yourtenant.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
+  </BasePolicy>
+  <BuildingBlocks>
+    <ClaimsSchema>
+      <ClaimType Id="objectId">
+        <DisplayName>User's Object ID</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Object identifier (ID) of the user object in Azure AD.</UserHelpText>
+      </ClaimType>
+      <ClaimType Id="signInName">
+        <DisplayName>Sign in name</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText/>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+      <ClaimType Id="Title">
+        <DisplayName>Title</DisplayName>
+        <DataType>string</DataType>
+        <AdminHelpText />
+        <UserHelpText />
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+      <ClaimType Id="givenName">
+        <DisplayName>Given Name</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Your given name (also known as first name).</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+      <ClaimType Id="surname">
+        <DisplayName>Surname</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Your surname (also known as family name or last name).</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+      <ClaimType Id="identityProvider">
+        <DisplayName>Identity Provider</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText/>
+      </ClaimType>
+    </ClaimsSchema>
+  </BuildingBlocks>
+
+  <ClaimsProviders>
+
+    <ClaimsProvider>
+      <DisplayName>SAML IDP</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="TESTIDP">
+          <DisplayName>SAML IDP</DisplayName>
+          <Protocol Name="SAML2" />
+          <Metadata>
+            <Item Key="IssuerUri">https://testmysaml.azurewebsites.net</Item>
+            <Item Key="PartnerEntity">https://testmysaml.azurewebsites.net/Metadata</Item>
+            <Item Key="WantsSignedAssertions">false</Item>
+            <Item Key="ResponsesSigned">false</Item>
+            <!-- Added for IDP Initated SSO From the Extrnal IDP SIde -->
+            <Item Key="IdpInitiatedProfileEnabled">true</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="SamlMessageSigning" StorageReferenceId="B2C_1A_B2CSamlCert" />
+            <Key Id="SamlAssertionSigning" StorageReferenceId="B2C_1A_B2CSamlCert" />
+            <Key Id="SamlAssertionDecryption" StorageReferenceId="B2C_1A_B2CSamlCert" />
+          </CryptographicKeys>
+          <!-- Input Claims used fro IDP Initiated SSO -->
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="Title" />
+            <InputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="FirstName" />
+            <InputClaim ClaimTypeReferenceId="surname" PartnerClaimType="LastName" />
+            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="UID" />
+            <InputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="TESTIDP" />
+            <InputClaim ClaimTypeReferenceId="socialIdpUserId" PartnerClaimType="objectid"/>
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="Title" />
+            <OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="FirstName" />
+            <OutputClaim ClaimTypeReferenceId="surname" PartnerClaimType="LastName" />
+            <OutputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="UID" />
+            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="TESTIDP" />
+            <OutputClaim ClaimTypeReferenceId="socialIdpUserId" PartnerClaimType="objectid"/>
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="socialIdpAuthentication"/>
+
+          </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CreateRandomUPNUserName"/>
+            <OutputClaimsTransformation ReferenceId="CreateUserPrincipalName"/>
+            <OutputClaimsTransformation ReferenceId="CreateAlternativeSecurityId"/>
+            <OutputClaimsTransformation ReferenceId="CreateSubjectClaimFromAlternativeSecurityId"/>
+          </OutputClaimsTransformations>
+          <EnabledForUserJourneys>true</EnabledForUserJourneys>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+    <ClaimsProvider>
+      <DisplayName>SAML Token Issuer</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="SAMLAssert">
+          <DisplayName>SAML Assertion</DisplayName>
+          <Protocol Name="None" />
+          <OutputTokenFormat>SAML2</OutputTokenFormat>
+          <CryptographicKeys>
+            <Key Id="SamlMessageSigning" StorageReferenceId="B2C_1A_B2CSamlCert" />
+            <Key Id="SamlAssertionSigning" StorageReferenceId="B2C_1A_B2CSamlCert" />
+            <Key Id="SamlAssertionDecryption" StorageReferenceId="B2C_1A_B2CSamlCert" />
+          </CryptographicKeys>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+  </ClaimsProviders>
+
+  <UserJourneys>
+    <UserJourney Id="SignUpOrSignIn">
+      <OrchestrationSteps>
+
+        <OrchestrationStep Order="1" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SAMLIdPExchange" TechnicalProfileReferenceId="TESTIDP" />
+            <!--<ClaimsExchange Id="SignUpWithLogonEmailExchange" TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail" />-->
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- For external IDP authentication, attempt to find the user account in the directory. -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>localAccountAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadUsingAlternativeSecurityId" TechnicalProfileReferenceId="AAD-UserReadUsingAlternativeSecurityId-NoError" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+
+        <!-- This step reads any user attributes that we may not have received when authenticating using ESTS so they can be sent 
+          in the token. -->
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>socialIdpAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+        <!-- The previous step (SelfAsserted-Social) could have been skipped if there were no attributes to collect 
+             from the user. So, in that case, create the user in the directory if one does not already exist 
+             (verified using objectId which would be set from the last step if account was created in the directory. -->
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserWrite" TechnicalProfileReferenceId="AAD-UserWriteUsingAlternativeSecurityId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="5" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="SAMLAssert" />
+
+      </OrchestrationSteps>
+      <ClientDefinition ReferenceId="DefaultWeb" />
+    </UserJourney>
+  </UserJourneys>
+
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="SignUpOrSignIn" />
+    <TechnicalProfile Id="SAMLRP">
+      <DisplayName>PolicyProfile</DisplayName>
+      <Protocol Name="SAML2" />
+      <OutputTokenFormat>SAML2</OutputTokenFormat>
+      <Metadata>
+        <Item Key="PartnerEntity">https://testmysaml.azurewebsites.net/Metadata</Item>
+        <!-- Added for IDP Initated SSO From the B2C Side -->
+        <Item Key="IdpInitiatedProfileEnabled">true</Item>
+      </Metadata>
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="SubjectNamingInfo" DefaultValue="NOSUBSET" />
+        <OutputClaim ClaimTypeReferenceId="title" />
+        <OutputClaim ClaimTypeReferenceId="givenName" />
+        <OutputClaim ClaimTypeReferenceId="surname" />
+        <OutputClaim ClaimTypeReferenceId="signInName" />
+        <OutputClaim ClaimTypeReferenceId="identityProvider" />
+      </OutputClaims>
+      <SubjectNamingInfo ClaimType="SubjectNamingInfo" Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient"/>
+    </TechnicalProfile>
+  </RelyingParty>
+
+</TrustFrameworkPolicy>

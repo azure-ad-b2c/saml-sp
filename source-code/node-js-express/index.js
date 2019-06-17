@@ -30,8 +30,8 @@ var sp = new saml2.ServiceProvider(sp_options);
 // Create identity provider
 // Azure AD B2C metadata:
 var idp_options = {
-  sso_login_url: "https://your-tenant.b2clogin.com/your-tenant.onmicrosoft.com/B2C_1A_SAML2_signup_signin/samlp/sso/login",
-  sso_logout_url: "https://your-tenant.b2clogin.com/your-tenant.onmicrosoft.com/B2C_1A_SAML2_signup_signin/samlp/sso/logout",
+  sso_login_url: "https://yourtenant.b2clogin.com/yourtenant.onmicrosoft.com/B2C_1A_SAML2_signup_signin/samlp/sso/login",
+  sso_logout_url: "https://yourtenant.b2clogin.com/yourtenant.onmicrosoft.com/B2C_1A_SAML2_signup_signin/samlp/sso/logout",
   certificates: [fs.readFileSync("certificates\\idp-cert-public.crt").toString()]
 };
 var idp = new saml2.IdentityProvider(idp_options);

@@ -28,13 +28,13 @@ https://tenant-name.b2clogin.com/tenant-name.onmicrosoft.com/policy-name/Samlp/m
 ## Digital signing certificates exchange
 To build a trust between your relying party application and Azure AD B2C, you need to provide valid X509 certificates (with the private key). One certificate with the private key (.pfx file) you store only on your web application. Your relying party application digitally signs the SAML sign-In request using that certificate you provide. Another  certificate with the private key (.pfx file) you store only on Azure AD B2C policy keys. Azure AD B2C digitally signs (or also encrypt) the SAML response using that certificate you provide.  
 
-* The SMAL request is sent over to the Azure AD B2C, which validates the SAML request using the same certificate's public key. Relying party public certificate is accessible through your relying party application's profile metadata.
+* The SAML request is sent over to the Azure AD B2C, which validates the SAML request using the same certificate's public key. Relying party public certificate is accessible through your relying party application's profile metadata.
 
 * Azure AD B2C also signs the data send back to the relying party application, using X509 certificate. The relying party application validates the SAML response, using Azure AD B2C policy's public certificate. Each application has different steps to do so, look at your application’s documentation for guidance on how to do so. 
 
 A self-signed certificate is fine for most scenarios. For production environments, we recommend using an X509 certificate that issued by certificate authority. Also as describe later in this document, for none production environment you can disable the SAML signing (on both sides).
 
-Follwing diagram depicts the metadata and certificate exchange
+Following diagram depicts the metadata and certificate exchange
 
 ![metadata and certificate exchange](media/aadb2c-ief-schema-technical-profile-rp-saml-metadata.png)
 
@@ -90,15 +90,15 @@ To decrypt the SAML assertion, the relying party application:
 Azure AD B2C provides the metadata defines the locations and the bindings of the services, such as sign-in and sign-out endpoints. The relying party application uses this information to initiates the SAML request (sign-in or sign-out). On the other hand, the relying party application provides the metadata defines the locations and bindings to which the SAML tokens are sent (SAML Response). The location is the URL of Azure AD B2C sign-in or sign-out endpoints, and the URL that Azure AD B2C sends the response back to the application, a.k.a redirect URI. The mechanism to transport these messages is called a SAML binding. Azure AD B2C supports following bindings for both, SAML request and SAML response:
 
 - **HTTP-Redirect** - SAML protocol messages are carried directly in the URL query string of an HTTP GET request. Including following query string parameters:
-    - SAMLReqeust or SAMLResponse - The body of the SAML requst/response
+    - SAMLRequest or SAMLResponse - The body of the SAML request/response
     - RelayState (if provided)
     - Signature request/response signature
-    - SigAlg - Singinture algorithm 
+    - SigAlg - Signature algorithm 
 
 - **HTTP-POST** The SAML messages are transmitted within an HTML form. Including following HTML form parameters:
-    - SAMLReqeust or SAMLResponse - The body of the SAML requst/response
+    - SAMLRequest or SAMLResponse - The body of the SAML request/response
     - RelayState (if provided)
-    - The request/response signature and singinture algorithm are included in the body of the SAMLReqeust or SAMLResponse
+    - The request/response signature and signature algorithm are included in the body of the SAMLRequest or SAMLResponse
 
 ## Force Authentication
 To force user sign-in, you can pass `ForceAuthn="true"` as an attribute of the `AuthnRequest` element. The specification of `ForceAuthn=true` in the SAML request tells Azure AD B2C that user should force re-authentication, even if a user possesses a valid Azure AD B2C session from previous sign-in. For example:
@@ -107,7 +107,7 @@ To force user sign-in, you can pass `ForceAuthn="true"` as an attribute of the `
 <saml2p:AuthnRequest 
     xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
     AssertionConsumerServiceURL="http://localhost:8080/spring-security-saml2-sample/saml/SSO" 
-    Destination="https://your-tenant.b2clogin.com/your-tenant.onmicrosoft.com/policy/samlp/sso/login" 
+    Destination="https://yourtenant.b2clogin.com/yourtenant.onmicrosoft.com/policy/samlp/sso/login" 
     ForceAuthn="true" 
     ID="a39j633j3i41idgf193b2553db7bf38" 
     IsPassive="false" 
@@ -135,7 +135,7 @@ https://tenant-name.b2clogin.com/tenant-name.onmicrosoft.com/policy-name/generic
 ```
 
 ## Sign-out
-When you want to sign the user out of the app, it is not enough to clear your app's cookies or otherwise end the session with the user. You must also redirect the user to Azure AD to sign out. If you fail to do so, the user might be able to reauthenticate to your app without entering their credentials again. This is because they will have a valid single sign-on session with Azure AD.
+When you want to sign the user out of the app, it is not enough to clear your app's cookies or otherwise end the session with the user. You must also redirect the user to Azure AD to sign out. If you fail to do so, the user might be able to re-authenticate to your app without entering their credentials again. This is because they will have a valid single sign-on session with Azure AD.
 
 To sign-out, you use the `<SingleLogoutService>` Location with the preferred binding.
 
@@ -145,8 +145,8 @@ To sign-out, you use the `<SingleLogoutService>` Location with the preferred bin
 ```
 
 Notes: 
-- If the session is set at tenant level `<SingleSignOn Scope="Tenant" />`, Azure AD B2C session is shared across multiple applications, using OpenId connect and SAML protocots.  In this case, sign-out from SAML relying party application means sign-out also from OpenId connect applications. 
-- Although directing the user to the sign-out endpoint will clear some of the user's single sign-on state with Azure AD B2C, it will not sign the user out of their social identity provider (IDP) session, such as Facebook. If the user selects the same IDP during a subsequent sign-in, they will be reauthenticated, without entering their credentials. If a user wants to sign out of your B2C application, it does not necessarily mean they want to sign out of their Facebook account. However, in the case of local accounts, the user's session will be ended properly.
+- If the session is set at tenant level `<SingleSignOn Scope="Tenant" />`, Azure AD B2C session is shared across multiple applications, using OpenId connect and SAML protocols.  In this case, sign-out from SAML relying party application means sign-out also from OpenId connect applications. 
+- Although directing the user to the sign-out endpoint will clear some of the user's single sign-on state with Azure AD B2C, it will not sign the user out of their social identity provider (IDP) session, such as Facebook. If the user selects the same IDP during a subsequent sign-in, they will be re-authenticated, without entering their credentials. If a user wants to sign out of your B2C application, it does not necessarily mean they want to sign out of their Facebook account. However, in the case of local accounts, the user's session will be ended properly.
 
 ## Technical profile's metadata
 |Attribute  |Required| Description  |
@@ -207,7 +207,7 @@ The `Name` attribute of the Protocol XML element has to be set to `None`. The `O
 ### SAML Issuer technical profile's metadata
 |Attribute  |Required| Description  |
 |---------|---------|---------|
-|IssuerUri |true |`https://login.microsoftonline.com/te/{tenant-name}/{policy}`. Replace {**your-tenant**} with your tenant name, and {**policy-name**} with your policy name. |
+|IssuerUri |true |`https://login.microsoftonline.com/te/{tenant-name}/{policy}`. Replace {**yourtenant**} with your tenant name, and {**policy-name**} with your policy name. |
 
 ### SAML Issuer technical profile's Cryptographic keys
 The following key may be present in the CryptographicKeys XML element:
@@ -224,8 +224,5 @@ The user journey orchestration step, needs to call `Saml2AssertionIssuer` instea
 <!--<OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />-->
 <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="Saml2AssertionIssuer" />
 ```
-
-
-
 
 
