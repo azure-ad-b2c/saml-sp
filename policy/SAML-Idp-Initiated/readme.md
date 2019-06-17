@@ -9,3 +9,5 @@ You can use the claims to look up and read/write an account if needed, similar t
 
 The IdP Technical Profile must contain the following metadata item for IdP Initiated logons to work.
 `<Item Key="IdpInitiatedProfileEnabled">true</Item>`
+
+To test this policy, you can use the `https://testmysaml.azurewebsites.net/IDP` endpoint. This endpoint will generate a SAML Assertion for a dummy user to AAD B2C. Fill in your tenant and policy Id to execute an IdP Initiated request. The response will come back to the same website as it acts as both an IdP and SP.
