@@ -56,8 +56,8 @@
           <DisplayName>SAML IDP</DisplayName>
           <Protocol Name="SAML2" />
           <Metadata>
-            <Item Key="IssuerUri">https://testmysaml.azurewebsites.net</Item>
-            <Item Key="PartnerEntity">https://testmysaml.azurewebsites.net/Metadata</Item>
+            <Item Key="IssuerUri">https://samltestsp.azurewebsites.net</Item>
+            <Item Key="PartnerEntity">https://samltestsp.azurewebsites.net/Metadata</Item>
             <Item Key="WantsSignedAssertions">false</Item>
             <Item Key="ResponsesSigned">false</Item>
             <!-- Added for IDP Initated SSO From the Extrnal IDP SIde -->
@@ -183,7 +183,7 @@
       <Protocol Name="SAML2" />
       <OutputTokenFormat>SAML2</OutputTokenFormat>
       <Metadata>
-        <Item Key="PartnerEntity">https://testmysaml.azurewebsites.net/Metadata</Item>
+        <Item Key="PartnerEntity">https://samltestsp.azurewebsites.net/Metadata</Item>
         <!-- Added for IDP Initated SSO From the B2C Side -->
         <Item Key="IdpInitiatedProfileEnabled">true</Item>
       </Metadata>
