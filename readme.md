@@ -253,8 +253,8 @@ provide some or all the following data points:
 1.  Save the text file as a .cer file
 
 ## Solution artifacts 
-- [TrustFrameworkExtensions.xml]()  The extensions policy file - holds the technical profile that issues a SAML token, SAML session management and the *SignUpSignInSAML* user journey.
-- [SignUpOrSigninSAML.xml](SignUpOrSigninSAML.xml) the relying party policy containing the SAML metadata configuration. Output claims and a reference to the *SignUpSignInSAML*user journey 
+- [TrustFrameworkExtensions.xml](https://github.com/Azure-Samples/active-directory-b2c-custom-policy-starterpack/blob/master/SocialAndLocalAccounts/TrustFrameworkExtensions.xml)  The extensions policy file - holds the technical profile that issues a SAML token, SAML session management and the *SignUpSignInSAML* user journey.
+- [SignUpOrSigninSAML.xml](policy/SAML-SP-Initiated/SignUpOrSigninSAML.xml) the relying party policy containing the SAML metadata configuration. Output claims and a reference to the *SignUpSignInSAML*user journey 
 
 
 ## SAML web applications
