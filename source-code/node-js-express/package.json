@@ -12,6 +12,6 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "saml2-js": "^2.0.3"
+    "saml2-js": "^2.0.5"
   }
 }
