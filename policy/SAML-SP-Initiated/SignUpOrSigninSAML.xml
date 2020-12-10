@@ -25,9 +25,9 @@
           </Metadata>
           <CryptographicKeys>
             <!--Action required: Create your own certificate and set the name -->
-            <Key Id="MetadataSigning" StorageReferenceId="B2C_1A_SamlRpCert" />
-            <Key Id="SamlAssertionSigning" StorageReferenceId="B2C_1A_SamlRpCert" />
-            <Key Id="SamlMessageSigning" StorageReferenceId="B2C_1A_SamlRpCert" />
+            <Key Id="MetadataSigning" StorageReferenceId="B2C_1A_SamlIdpCert" />
+            <Key Id="SamlAssertionSigning" StorageReferenceId="B2C_1A_SamlIdpCert" />
+            <Key Id="SamlMessageSigning" StorageReferenceId="B2C_1A_SamlIdpCert" />
           </CryptographicKeys>
           <InputClaims/>
           <OutputClaims/>
