@@ -1,5 +1,7 @@
 # SAML IdP initiated policy sample
 
+# This sample is unsupported for use. The private preview of this feature has ended.
+
 ## Prerequisites
 1. Deploy the Azure AD B2C [custom policy](https://docs.microsoft.com/en-us/azure/active-directory-b2c/custom-policy-overview) starter pack using the [IEF Setup tool](https://aka.ms/iefsetup)
 1. Follow the documentation for: [Register a SAML application in Azure AD B2C](https://docs.microsoft.com/azure/active-directory-b2c/saml-service-provider?tabs=windows&pivots=b2c-custom-policy)
